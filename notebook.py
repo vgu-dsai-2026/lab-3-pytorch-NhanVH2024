@@ -131,7 +131,7 @@ print(df["split"].value_counts())
 # This is the same Pandas-style label handling from Lab 2, but now the labels become the targets for PyTorch training.
 # 
 
-# In[2]:
+# In[14]:
 
 
 #def build_label_mapping(frame: pd.DataFrame) -> tuple[dict[str, int], pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
@@ -152,19 +152,9 @@ def build_label_mapping(frame: pd.DataFrame) -> tuple[dict[str, int], pd.DataFra
 
     labelled["label_id"] = labelled["label"].map(label_to_index)
 
-    train_df, temp_df = train_test_split(
-        labelled,
-        test_size=0.30,
-        random_state=SEED,
-        stratify=labelled["label_id"]
-    )
-
-    val_df, test_df = train_test_split(
-        temp_df,
-        test_size=0.50,
-        random_state=SEED,
-        stratify=temp_df["label_id"]
-    )
+    train_df = labelled[labelled["split"] == "train"]
+    val_df   = labelled[labelled["split"] == "val"]
+    test_df  = labelled[labelled["split"] == "test"]
 
     return label_to_index, labelled, train_df, val_df, test_df
 
@@ -257,7 +247,7 @@ print(first_image.shape, first_image.dtype, first_label)
 # Reuse `train_df`, `val_df`, and `test_df` here.
 # 
 
-# In[4]:
+# In[13]:
 
 
 BATCH_SIZE = 32
@@ -284,7 +274,7 @@ def build_dataloaders(
         train_dataset,
         batch_size=batch_size,
         shuffle=True,
-        generator=train_loader_generator
+        generator=torch.Generator().manual_seed(seed)
     )
 
     val_loader = DataLoader(
