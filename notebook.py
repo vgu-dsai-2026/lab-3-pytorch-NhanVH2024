@@ -647,20 +647,20 @@ def run_training_experiment(
     print(f"Test Loss: {test_loss:.4f}")
     print(f"Test Accuracy: {test_acc:.3f}")
 
-    return history, test_loss, test_acc, None
+    return history, test_loss, test_acc
 
-if __name__ == "__main__":
-    history, test_loss, test_acc, _ = run_training_experiment(
-        model,
-        train_loader,
-        val_loader,
-        test_loader,
-        criterion,
-        optimizer,
-        device,
-        epochs=EPOCHS,
-        plot=True,
-    )
+#if __name__ == "__main__":
+ #   history, test_loss, test_acc, _ = run_training_experiment(
+  #      model,
+  #      train_loader,
+  #      val_loader,
+  #      test_loader,
+  #      criterion,
+  #      optimizer,
+  #      device,
+#        epochs=EPOCHS,
+#       plot=True,
+ #   )
 
 
 
