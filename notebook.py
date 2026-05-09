@@ -142,7 +142,7 @@ print(df["split"].value_counts())
 from sklearn.model_selection import train_test_split
 import pandas as pd
 
-SEED = 42
+
 
 def build_label_mapping(frame: pd.DataFrame) -> tuple[dict[str, int], pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
 
@@ -251,7 +251,7 @@ print(first_image.shape, first_image.dtype, first_label)
 
 
 BATCH_SIZE = 32
-SEED = 42
+
 
 def build_dataloaders(
     train_df: pd.DataFrame,
@@ -648,6 +648,28 @@ def run_training_experiment(
     print(f"Test Accuracy: {test_acc:.3f}")
 
     return history, test_loss, test_acc
+history, test_loss, test_acc = run_training_experiment(
+    model,
+    train_loader,
+    val_loader,
+    test_loader,
+    criterion,
+    optimizer,
+    device,
+    epochs=EPOCHS,   
+    plot=True,
+)
+all_preds = []
+model.eval()
+with torch.no_grad():
+    for images, labels in test_loader:
+        images = images.to(device)
+        logits = model(images)
+        preds = torch.argmax(logits, dim=1).cpu().numpy()
+        all_preds.extend(preds)
+
+pd.DataFrame({"prediction": all_preds}).to_csv(NUMPY_PRED_PATH, index=False)
+print(f"Saved predictions to {NUMPY_PRED_PATH}")
 
 
 
