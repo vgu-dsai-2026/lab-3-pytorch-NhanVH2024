@@ -650,7 +650,7 @@ def run_training_experiment(
     return history, test_loss, test_acc, None
 
 if __name__ == "__main__":
-    history, test_loss, test_acc = run_training_experiment(
+    history, test_loss, test_acc, _ = run_training_experiment(
         model,
         train_loader,
         val_loader,
