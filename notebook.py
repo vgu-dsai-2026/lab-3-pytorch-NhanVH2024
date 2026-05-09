@@ -600,8 +600,8 @@ def run_training_experiment(
     device: torch.device,
     epochs: int = 5,
     plot: bool = True,
-) -> tuple[list[dict[str, float]], float, float, float | None]:
-    # TODO: run the training/validation loop, evaluate on the test set,
+) -> tuple[list[dict[str, float]], float, float]:
+
     history = []
 
     for epoch in range(epochs):
@@ -628,6 +628,7 @@ def run_training_experiment(
             "val_loss": val_loss,
             "val_acc": val_acc,
         })
+
         print(
             f"Epoch {epoch + 1}/{epochs} | "
             f"Train Loss: {train_loss:.4f} | "
@@ -635,25 +636,31 @@ def run_training_experiment(
             f"Val Loss: {val_loss:.4f} | "
             f"Val Acc: {val_acc:.3f}"
         )
+
     test_loss, test_acc = evaluate(
         model,
         test_loader,
         criterion,
         device
     )
+
     print(f"Test Loss: {test_loss:.4f}")
     print(f"Test Accuracy: {test_acc:.3f}")
+
     return history, test_loss, test_acc
-#history, test_loss, test_acc = run_training_experiment(
-    model,
-    train_loader,
-    val_loader,
-    test_loader,
-    criterion,
-    optimizer,
-    device,
-    epochs=EPOCHS,
-    plot=True,
+
+if __name__ == "__main__":
+    history, test_loss, test_acc = run_training_experiment(
+        model,
+        train_loader,
+        val_loader,
+        test_loader,
+        criterion,
+        optimizer,
+        device,
+        epochs=EPOCHS,
+        plot=True,
+    )
 
 
 
