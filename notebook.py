@@ -267,7 +267,7 @@ def build_dataloaders(
     val_dataset = dataset_cls(val_df, data_root)
     test_dataset = dataset_cls(test_df, data_root)
 
-    # 🔥 FIX SEED
+    
     g = torch.Generator()
     g.manual_seed(seed)
 
@@ -275,7 +275,7 @@ def build_dataloaders(
         train_dataset,
         batch_size=batch_size,
         shuffle=True,
-        generator=g   # ⭐ QUAN TRỌNG NHẤT
+        generator=g   
     )
 
     val_loader = DataLoader(
