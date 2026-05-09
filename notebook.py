@@ -162,7 +162,7 @@ def evaluate(model: nn.Module, loader: DataLoader, criterion: nn.Module, device:
     average_accuracy = total_correct / total_examples
     return (average_loss, average_accuracy)
 
-def run_training_experiment(model: nn.Module, train_loader: DataLoader, val_loader: DataLoader, test_loader: DataLoader, criterion: nn.Module, optimizer: torch.optim.Optimizer, device: torch.device, epochs: int=5, plot: bool=True) -> tuple[list[dict[str, float]], float, float, float | None]:
+def run_training_experiment(model: nn.Module, train_loader: DataLoader, val_loader: DataLoader, test_loader: DataLoader, criterion: nn.Module, optimizer: torch.optim.Optimizer, device: torch.device, epochs: int=5, plot: bool=True) -> tuple[list[dict[str, float]], float, float, float]:
     history = []
     for epoch in range(epochs):
         train_loss, train_acc = train_one_epoch(model, train_loader, optimizer, criterion, device)
@@ -172,5 +172,5 @@ def run_training_experiment(model: nn.Module, train_loader: DataLoader, val_load
     test_loss, test_acc = evaluate(model, test_loader, criterion, device)
     print(f'Test Loss: {test_loss:.4f}')
     print(f'Test Accuracy: {test_acc:.3f}')
-    return (history, test_loss, test_acc, None)
+    return history, test_loss, test_acc
 all_preds = []
