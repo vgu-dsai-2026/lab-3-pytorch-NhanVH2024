@@ -5,8 +5,6 @@ import torch
 from torch import nn
 from torch.utils.data import Dataset, DataLoader
 from PIL import Image
-import matplotlib
-import matplotlib.pyplot as plt
 from lab_utils.visualization import extract_feature_maps, plot_feature_maps_like_reference, plot_training_history, show_tensor_batch
 
 def find_project_root() -> Path:
