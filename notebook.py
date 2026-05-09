@@ -647,7 +647,7 @@ def run_training_experiment(
     print(f"Test Loss: {test_loss:.4f}")
     print(f"Test Accuracy: {test_acc:.3f}")
 
-    return history, test_loss, test_acc
+    return history, test_loss, test_acc, None
 
 if __name__ == "__main__":
     history, test_loss, test_acc = run_training_experiment(
