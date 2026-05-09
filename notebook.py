@@ -253,7 +253,6 @@ print(first_image.shape, first_image.dtype, first_label)
 BATCH_SIZE = 32
 SEED = 42
 
-
 def build_dataloaders(
     train_df: pd.DataFrame,
     val_df: pd.DataFrame,
@@ -268,11 +267,15 @@ def build_dataloaders(
     val_dataset = dataset_cls(val_df, data_root)
     test_dataset = dataset_cls(test_df, data_root)
 
+    # 🔥 FIX SEED
+    g = torch.Generator()
+    g.manual_seed(seed)
+
     train_loader = DataLoader(
         train_dataset,
         batch_size=batch_size,
         shuffle=True,
-        generator=torch.Generator().manual_seed(seed)
+        generator=g   # ⭐ QUAN TRỌNG NHẤT
     )
 
     val_loader = DataLoader(
@@ -641,7 +644,7 @@ def run_training_experiment(
     print(f"Test Loss: {test_loss:.4f}")
     print(f"Test Accuracy: {test_acc:.3f}")
     return history, test_loss, test_acc
-history, test_loss, test_acc = run_training_experiment(
+#history, test_loss, test_acc = run_training_experiment(
     model,
     train_loader,
     val_loader,
@@ -651,9 +654,9 @@ history, test_loss, test_acc = run_training_experiment(
     device,
     epochs=EPOCHS,
     plot=True,
-)
 
-history
+
+
 
 
 # ## Optional Visualization: Feature Maps Like the AlexNet Notebook
